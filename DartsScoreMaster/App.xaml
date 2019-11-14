@@ -1,0 +1,571 @@
+﻿<Application
+    x:Class="DartsScoreMaster.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:viewModels="using:DartsScoreMaster.ViewModels"
+    xmlns:controls="using:DartsScoreMaster.Controls"
+    xmlns:grid="using:Syncfusion.UI.Xaml.Grid">
+    <Application.Resources>
+        <viewModels:MainLocator x:Key="Locator"  />
+
+        <controls:VisibilityConverter x:Key="VisibilityConverter" />
+        <controls:ReverseBoolConverter x:Key="ReverseBoolConverter" />
+        <controls:ReverseVisibilityConverter x:Key="ReverseVisibilityConverter" />
+        <controls:ColorConverter x:Key="ColorConverter" />
+        <controls:FontConverter x:Key="FontConverter" />
+        <controls:RadioConverter x:Key="RadioConverter" />
+        <controls:CricketConverter x:Key="CricketConverter" />
+        <controls:StringFormatConverter x:Key="StringFormatConverter" />
+        <controls:DecimalConverter x:Key="DecimalConverter" />
+        <controls:VisibilityWhenNullConverter x:Key="VisibilityWhenNullConverter" />
+        
+        <!-- Data Templates -->
+
+        <DataTemplate x:Key="Cricket">
+            <Border Margin="3" Background="Black" BorderBrush="{Binding BlackBoardColor}" BorderThickness="2">
+              <Grid Margin="22 10 22 22" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                    </Grid.RowDefinitions>
+               
+                    <TextBlock  Grid.Column="0" Grid.Row="6"  TextWrapping="NoWrap"  Padding="0"  Margin="0" Text="{Binding SetScore}"
+                                           Foreground="White" FontSize="{Binding CricketSetScoreFontSize}"   FontFamily="Comic Sans MS"
+                               FontWeight="Bold"                 TextAlignment="Left" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+                    <TextBlock TextWrapping="NoWrap" Grid.Column="0" Padding="0" Grid.Row="7"  Margin="0" Text="{Binding LegScore}" 
+                                           Foreground="White" FontSize="{Binding CricketLegScoreFontSize}"   FontFamily="Comic Sans MS"
+                                   FontWeight="Bold"           TextAlignment="Left" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+
+
+                    <Border Grid.Row="2" Grid.RowSpan="4"  Grid.Column="0" VerticalAlignment="Center"  >
+                        <Image Margin="6" Stretch="Fill"  Source="{Binding PlayerDetails.PlayerImageDefinition.Source, 
+                            FallbackValue=ms-appx:///Assets/person.png,TargetNullValue=ms-appx:///Assets/person.png}">
+                        </Image>
+                    </Border>
+
+                    <TextBlock Padding="0"  Margin="0 0 0 0" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" TextWrapping="NoWrap" Foreground="White" 
+                                FontSize="{Binding CricketNickNameFontSize}"    FontFamily="Comic Sans MS" 
+                               HorizontalAlignment="Stretch" VerticalAlignment="Center" Text="{Binding NickName}"></TextBlock>
+
+                    <StackPanel  Orientation="Horizontal" Margin="0" Grid.Column="2" Grid.Row="0" VerticalAlignment="Stretch" HorizontalAlignment="Right">
+                        <Image Margin="0 0 0 5"  Stretch="Fill" Source="{Binding DartImage}" Visibility="{Binding ShowFirstDart,Converter={StaticResource VisibilityConverter}}"/>
+                        <Image Margin="0 0 0 5" Stretch="Fill"  Source="{Binding DartImage}" Visibility="{Binding ShowSecondDart,Converter={StaticResource VisibilityConverter}}"/>
+                        <Image  Margin="0 0 0 5" Stretch="Fill"  Source="{Binding DartImage}" Visibility="{Binding ShowThirdDart,Converter={StaticResource VisibilityConverter}}"/>
+                    </StackPanel>
+
+                    <Border Margin="0" Grid.Column="0"  Grid.Row="1"  BorderBrush="Black" BorderThickness="1">
+                        <TextBlock  Margin="0"  TextWrapping="NoWrap" Foreground="White"  FontSize="{Binding CricketScoreFontSize}" FontFamily="Comic Sans MS" 
+                              VerticalAlignment="Center" TextAlignment="Center" HorizontalAlignment="Center" Text="{Binding InterimScore}"></TextBlock>
+                    </Border>
+
+                    <Border Margin="0" Grid.Column="1"  Grid.Row="1"  BorderBrush="Black" BorderThickness="1" Background="#FFF1A445" VerticalAlignment="Stretch"
+                                    HorizontalAlignment="Stretch">
+                        <TextBlock  FontWeight="ExtraBold"  Margin="0" TextWrapping="NoWrap" Foreground="Black"  FontSize="{Binding CricketFontSize}"    FontFamily="Comic Sans MS" 
+                                VerticalAlignment="Center" TextAlignment="Center" HorizontalAlignment="Center" Text="{Binding Hits20, Converter={StaticResource CricketConverter}}"></TextBlock>
+                    </Border>
+                    <Border Margin="0" Grid.Column="1"  Grid.Row="2"  BorderBrush="Black" BorderThickness="1" Background="#FFF1A445">
+                        <TextBlock  FontWeight="ExtraBold"  Margin="0" TextWrapping="NoWrap" Foreground="Black"  FontSize="{Binding CricketFontSize}"    FontFamily="Comic Sans MS" 
+                                VerticalAlignment="Center" TextAlignment="Center" HorizontalAlignment="Center" Text="{Binding Hits19, Converter={StaticResource CricketConverter}}"></TextBlock>
+                    </Border>
+                    <Border Margin="0" Grid.Column="1"  Grid.Row="3"  BorderBrush="Black" BorderThickness="1" Background="#FFF1A445">
+                        <TextBlock  FontWeight="ExtraBold"  Margin="0" TextWrapping="NoWrap" Foreground="Black"  FontSize="{Binding CricketFontSize}"    FontFamily="Comic Sans MS" 
+                                VerticalAlignment="Center" TextAlignment="Center" HorizontalAlignment="Center" Text="{Binding Hits18, Converter={StaticResource CricketConverter}}"></TextBlock>
+                    </Border>
+                    <Border Margin="0" Grid.Column="1"  Grid.Row="4"  BorderBrush="Black" BorderThickness="1" Background="#FFF1A445">
+                        <TextBlock  FontWeight="ExtraBold"  Margin="0" TextWrapping="NoWrap" Foreground="Black"  FontSize="{Binding CricketFontSize}"    FontFamily="Comic Sans MS" 
+                                VerticalAlignment="Center" TextAlignment="Center" HorizontalAlignment="Center" Text="{Binding Hits17, Converter={StaticResource CricketConverter}}"></TextBlock>
+                    </Border>
+                    <Border Margin="0" Grid.Column="1"  Grid.Row="5"  BorderBrush="Black" BorderThickness="1" Background="#FFF1A445">
+                        <TextBlock  FontWeight="ExtraBold"   Margin="0" TextWrapping="NoWrap" Foreground="Black"  FontSize="{Binding CricketFontSize}"    FontFamily="Comic Sans MS" 
+                                VerticalAlignment="Center" TextAlignment="Center" HorizontalAlignment="Center" Text="{Binding Hits16, Converter={StaticResource CricketConverter}}"></TextBlock>
+                    </Border>
+                    <Border Margin="0" Grid.Column="1"  Grid.Row="6"  BorderBrush="Black" BorderThickness="1" Background="#FFF1A445">
+                        <TextBlock  FontWeight="ExtraBold"   Margin="0" TextWrapping="NoWrap" Foreground="Black"  FontSize="{Binding CricketFontSize}"    FontFamily="Comic Sans MS" 
+                               VerticalAlignment="Center" TextAlignment="Center" HorizontalAlignment="Center" Text="{Binding Hits15, Converter={StaticResource CricketConverter}}"></TextBlock>
+                    </Border>
+                    <Border Margin="0" Grid.Column="1"  Grid.Row="7"  BorderBrush="Black" BorderThickness="1" Background="#FFF1A445">
+                        <TextBlock FontWeight="ExtraBold"  Margin="0" TextWrapping="NoWrap" Foreground="Black"  FontSize="{Binding CricketFontSize}"   FontFamily="Comic Sans MS" 
+                            VerticalAlignment="Center" TextAlignment="Center" HorizontalAlignment="Center" Text="{Binding HitsBull, Converter={StaticResource CricketConverter}}"></TextBlock>
+                    </Border>
+
+                    <Border Margin="0" Grid.Column="2"  Grid.Row="1"  BorderBrush="Black" BorderThickness="1" VerticalAlignment="Stretch" Background="{Binding Hits20Color}"
+                                    HorizontalAlignment="Stretch">
+                        <Image Margin="0"  Stretch="Fill" Source="{Binding TwentyImage}" Width="{Binding CricketImageSize}" Height="{Binding CricketImageSize}"
+                               VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    </Border>
+                    <Border Margin="0" Grid.Column="2"  Grid.Row="2"  BorderBrush="Black" BorderThickness="1" VerticalAlignment="Stretch" Background="{Binding Hits19Color}"
+                                    HorizontalAlignment="Stretch">
+                        <Image Margin="0"  Stretch="Fill" Source="{Binding NineteenImage}" Width="{Binding CricketImageSize}" Height="{Binding CricketImageSize}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    </Border>
+                    <Border Margin="0" Grid.Column="2"  Grid.Row="3"  BorderBrush="Black" BorderThickness="1" VerticalAlignment="Stretch" Background="{Binding Hits18Color}"
+                                    HorizontalAlignment="Stretch">
+                        <Image Margin="0"  Stretch="Fill" Source="{Binding EighteenImage}" Width="{Binding CricketImageSize}" Height="{Binding CricketImageSize}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    </Border>
+                    <Border Margin="0" Grid.Column="2"  Grid.Row="4"  BorderBrush="Black" BorderThickness="1" VerticalAlignment="Stretch" Background="{Binding Hits17Color}"
+                                    HorizontalAlignment="Stretch">
+                        <Image Margin="0"  Stretch="Fill" Source="{Binding SeventeenImage}" Width="{Binding CricketImageSize}" Height="{Binding CricketImageSize}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    </Border>
+                    <Border Margin="0" Grid.Column="2"  Grid.Row="5"  BorderBrush="Black" BorderThickness="1" VerticalAlignment="Stretch" Background="{Binding Hits16Color}"
+                                    HorizontalAlignment="Stretch">
+                        <Image Margin="0"  Stretch="Fill" Source="{Binding SixteenImage}" Width="{Binding CricketImageSize}" Height="{Binding CricketImageSize}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+                    </Border>
+                    <Border Margin="0" Grid.Column="2"  Grid.Row="6"  BorderBrush="Black" BorderThickness="1" VerticalAlignment="Stretch" Background="{Binding Hits15Color}"
+                                    HorizontalAlignment="Stretch">
+                        <Image Margin="0"  Stretch="Fill" Source="{Binding FifteenImage}" Width="{Binding CricketImageSize}" Height="{Binding CricketImageSize}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+                    </Border>
+                    <Border Margin="0" Grid.Column="2"  Grid.Row="7"  BorderBrush="Black" BorderThickness="1" VerticalAlignment="Stretch" Background="{Binding HitsBullColor}"
+                                    HorizontalAlignment="Stretch">
+                        <Image Margin="0"  Stretch="Fill" Source="{Binding BullImage}" Width="{Binding CricketImageSize}" Height="{Binding CricketImageSize}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+                    </Border>
+
+                    <TextBlock  Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="3" Margin="0 5 0 0" Text="{Binding Path=CurrentDartCount,Converter={StaticResource StringFormatConverter},
+                      ConverterParameter='Dart {0}'}" 
+                                Foreground="White" FontSize="{Binding ScoreFontSize}"  FontFamily="Comic Sans MS" FontWeight="Bold"
+                                TextAlignment="Left" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+
+                    <TextBlock  Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="3" Margin="0" Text="{Binding WinMessage}" 
+                                Foreground="Red" FontSize="{Binding ScoreFontSize}"  FontFamily="Comic Sans MS" FontWeight="Bold"
+                                TextAlignment="Right" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+
+                    <TextBlock Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="3" Margin="0" Text="{Binding LeaderMessage}" 
+                                Foreground="Red" FontSize="{Binding ScoreFontSize}"  FontFamily="Comic Sans MS" FontWeight="Bold"
+                                TextAlignment="Right" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+
+                  <Grid Grid.Row="0" Grid.Column="0" Grid.RowSpan="9" Grid.ColumnSpan="3" >
+                      <Image  Visibility="{Binding IsGameShot,Converter={StaticResource VisibilityConverter}}" Margin="0" Source="ms-appx:///Assets/gameshot.png" 
+                              VerticalAlignment="Stretch" HorizontalAlignment="Stretch"></Image>
+                  </Grid>
+                </Grid>
+            </Border>
+
+        </DataTemplate>
+        <DataTemplate x:Key="Standard">
+            <Border Margin="3" Background="Black" BorderBrush="{Binding BlackBoardColor}" BorderThickness="3">
+                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1.1*"></RowDefinition>
+                        <RowDefinition Height="5*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <TextBlock  Margin="0 0 0 0" Grid.Row="0" Grid.Column="0"  TextWrapping="NoWrap" Foreground="White"
+                                FontSize="{Binding ScoreNickNameFontSize}"    FontFamily="Comic Sans MS" 
+                               HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Text="{Binding NickName}"></TextBlock>
+                    <StackPanel  Orientation="Horizontal" Margin="0" Grid.Column="1" Grid.Row="0" VerticalAlignment="Stretch" HorizontalAlignment="Right">
+                        <Image Margin="0 0 0 5"  Stretch="Fill" Source="{Binding DartImage}" Visibility="{Binding ShowFirstDart,Converter={StaticResource VisibilityConverter}}"/>
+                        <Image Margin="0 0 0 5" Stretch="Fill"  Source="{Binding DartImage}" Visibility="{Binding ShowSecondDart,Converter={StaticResource VisibilityConverter}}"/>
+                        <Image  Margin="0 0 0 5" Stretch="Fill"  Source="{Binding DartImage}" Visibility="{Binding ShowThirdDart,Converter={StaticResource VisibilityConverter}}"/>
+                    </StackPanel>
+
+                    <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Border  Grid.Row="0" Grid.Column="0" VerticalAlignment="Center"   Margin="0">
+                            <Image Margin="6" Stretch="Fill" 
+                                       Source="{Binding PlayerDetails.PlayerImageDefinition.Source, FallbackValue=ms-appx:///Assets/person.png,TargetNullValue=ms-appx:///Assets/person.png}">
+                            </Image>
+                        </Border>
+
+                        <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Vertical" HorizontalAlignment="Right" Margin="{Binding DartsScoreMargin}">
+
+                            <TextBlock   TextWrapping="NoWrap"   Margin="0" Text="{Binding SetScore}" FontWeight="Bold"
+                                           Foreground="White" FontSize="{Binding SetScoreFontSize}"   FontFamily="Comic Sans MS"
+                                              TextAlignment="Right" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+                            <TextBlock TextWrapping="NoWrap"   Margin="0" Text="{Binding LegScore}" FontWeight="Bold"
+                                           Foreground="White" FontSize="{Binding LegScoreFontSize}"   FontFamily="Comic Sans MS"
+                                              TextAlignment="Right" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+                        </StackPanel>
+                        <Grid  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" Margin="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+
+                            <Border Grid.Row="1" Grid.Column="0"  BorderThickness="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                <TextBlock  Margin="0 0 0 10" 
+                                FontStyle="Italic"  Text="{Binding InterimScore}"   Foreground="White" VerticalAlignment="Center"
+                                                                FontSize="{Binding BigScoreFontSize}"  FontFamily="Comic Sans MS" TextAlignment="Center"/>
+                            </Border>
+                            <Border Grid.Row="0" Grid.RowSpan="3" BorderThickness="1" Grid.Column="1"  BorderBrush="White" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                             </Border>
+                        </Grid>
+                    </Grid>
+
+                    <TextBlock  Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="0" Text="{Binding Path=CurrentDartCount,Converter={StaticResource StringFormatConverter},
+                      ConverterParameter='Dart {0}'}" 
+                                Foreground="White" FontSize="{Binding ScoreFontSize}"  FontFamily="Comic Sans MS" FontWeight="Bold"
+                                TextAlignment="Left" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+
+                    <TextBlock  Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="0" Text="{Binding WinMessage}" 
+                                Foreground="Red" FontSize="{Binding ScoreFontSize}"  FontFamily="Comic Sans MS" FontWeight="Bold"
+                                TextAlignment="Right" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+
+                    <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="0" Text="{Binding LeaderMessage}" 
+                                Foreground="Red" FontSize="{Binding ScoreFontSize}"  FontFamily="Comic Sans MS" FontWeight="Bold"
+                                TextAlignment="Right" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                    <Grid Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" Grid.ColumnSpan="2" >
+                        <Image   Visibility="{Binding IsBust,Converter={StaticResource VisibilityConverter}}" Margin="0" Source="ms-appx:///Assets/bust.png" 
+                                 VerticalAlignment="Stretch" HorizontalAlignment="Stretch"></Image>
+                        <Image   Visibility="{Binding IsGameShot,Converter={StaticResource VisibilityConverter}}"  Margin="0" Source="ms-appx:///Assets/gameshot.png" 
+                                 VerticalAlignment="Stretch" HorizontalAlignment="Stretch"></Image>
+                    </Grid>
+                </Grid>
+            </Border>
+        </DataTemplate>
+
+        <DataTemplate x:Key="PlayerView">
+            <Border BorderBrush="White" BorderThickness="2">
+                <Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition  Width="7*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Border  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" >
+                            <Image Margin="6" Stretch="Uniform"  Source="{Binding PlayerImageDefinition.Source, FallbackValue=ms-appx:///Assets/person.png,
+                            TargetNullValue=ms-appx:///Assets/person.png}">
+                            </Image>
+                        </Border>
+
+                        <TextBlock Grid.Column="0" Grid.ColumnSpan="2"  Grid.Row="1" Text="{Binding NickName}" FontSize="{Binding PlayerNameFontSize}" FontStyle="Normal" 
+                               FontWeight="Bold" FontFamily="Comic Sans MS"  Margin="5 0 0 0" Foreground="White"
+                        IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Center" HorizontalAlignment="Left" TextAlignment="Left"/>
+                    </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition  Width="5*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="5*" />
+                        </Grid.RowDefinitions>
+                        <Image  Grid.Row="0" Grid.Column="0" Stretch="Fill" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0 0 0 0"  Source="{Binding SelectedFlight.Image}">
+                        </Image>
+                    </Grid>
+                </Grid>
+
+            </Border>
+
+        </DataTemplate>
+
+
+        <Style TargetType="FlyoutPresenter" x:Key="FlyoutBackgroundThemeBrush">
+            <Setter Property="Background" Value="Transparent" />
+        </Style>
+
+        <Style TargetType="FlyoutPresenter" x:Key="FlyoutBorderThemeThickness">
+            <Setter Property="BorderThickness" Value="0" />
+        </Style>
+
+        <Style TargetType="TextBlock" >
+            <Setter Property="Foreground" Value="White" />
+        </Style>
+
+        <!-- Text Styles -->
+        <Style TargetType="Control" x:Key="BaseTextStyle">
+            <Setter Property="FontFamily" Value="Comic Sans MS" />
+            <Setter Property="FontSize" Value="18" />
+        </Style>
+
+        <Style  x:Key="GameStyle" TargetType="ComboBox" BasedOn="{StaticResource BaseTextStyle}">
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="Width" Value="150"/>
+        </Style>
+
+        <Style  x:Key="SettingsStyle" TargetType="ComboBox" BasedOn="{StaticResource BaseTextStyle}">
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Width" Value="140"/>
+        </Style>
+
+        <Style x:Key="GameItemStyle" TargetType="ComboBoxItem" BasedOn="{StaticResource BaseTextStyle}">
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="TabNavigation" Value="Local"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBoxItem">
+                        <Border x:Name="LayoutRoot" BorderBrush="White" BorderThickness="1" Background="Black" ToolTipService.ToolTip="{Binding FullName}">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal"/>
+                                    <VisualState x:Name="PointerOver">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="LayoutRoot">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="White"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource ListBoxItemPointerOverForegroundThemeBrush}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Disabled">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="LayoutRoot">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="Transparent"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource ListBoxItemDisabledForegroundThemeBrush}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Pressed">
+                                        <Storyboard>
+                                            <DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="PressedBackground"/>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource ListBoxItemPressedForegroundThemeBrush}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                                <VisualStateGroup x:Name="SelectionStates">
+                                    <VisualState x:Name="Unselected"/>
+                                    <VisualState x:Name="Selected">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="InnerGrid">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="Black"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource ListBoxItemSelectedForegroundThemeBrush}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="SelectedUnfocused">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="InnerGrid">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource ListBoxItemSelectedBackgroundThemeBrush}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource ListBoxItemSelectedForegroundThemeBrush}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="SelectedDisabled">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="InnerGrid">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource ListBoxItemSelectedDisabledBackgroundThemeBrush}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource ListBoxItemSelectedDisabledForegroundThemeBrush}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="SelectedPointerOver">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="InnerGrid">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource ListBoxItemSelectedPointerOverBackgroundThemeBrush}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource ListBoxItemSelectedForegroundThemeBrush}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="SelectedPressed">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Background" Storyboard.TargetName="InnerGrid">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource ListBoxItemSelectedBackgroundThemeBrush}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource ListBoxItemSelectedForegroundThemeBrush}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                                <VisualStateGroup x:Name="FocusStates">
+                                    <VisualState x:Name="Focused">
+                                        <Storyboard>
+                                            <DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="FocusVisualWhite"/>
+                                            <DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="FocusVisualBlack"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Unfocused"/>
+                                    <VisualState x:Name="PointerFocused"/>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <Grid x:Name="InnerGrid" Background="Transparent">
+                                <Rectangle x:Name="PressedBackground" Fill="{StaticResource ListBoxItemPressedBackgroundThemeBrush}" Opacity="0"/>
+                                <ContentPresenter x:Name="ContentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" ContentTransitions="{TemplateBinding ContentTransitions}" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" />
+                                <Rectangle x:Name="FocusVisualWhite" Opacity="0" StrokeDashOffset=".5" StrokeEndLineCap="Square" Stroke="{StaticResource FocusVisualWhiteStrokeThemeBrush}" StrokeDashArray="1,1"/>
+                                <Rectangle x:Name="FocusVisualBlack" Opacity="0" StrokeDashOffset="1.5" StrokeEndLineCap="Square" Stroke="{StaticResource FocusVisualBlackStrokeThemeBrush}" StrokeDashArray="1,1"/>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="DropShadow" TargetType="Border" >
+            <Setter Property="Background" Value="WhiteSmoke" />
+            <Setter Property="BorderThickness" Value="1,1,6,6" />
+            <Setter Property="Margin" Value="10" />
+            <Setter Property="BorderBrush">
+                <Setter.Value>
+                    <LinearGradientBrush>
+                        <GradientStop Color="#000000" Offset="0" />
+                        <GradientStop Color="#ffffff" Offset="1" />
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0" x:Key="BlackGradient">
+            <GradientStop Color="Black"/>
+            <GradientStop Color="White" Offset="1"/>
+        </LinearGradientBrush>
+
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0" x:Key="GreenGradient">
+            <GradientStop Color="#FF01AD4E" Offset="0.778"/>
+            <GradientStop Color="White" Offset="1"/>
+        </LinearGradientBrush>
+
+        <ImageBrush x:Key="Panel2LargeTheme1"  AlignmentX="Left" AlignmentY="Top" ImageSource="ms-appx:///Assets/Panel2LargeTheme1.png" Stretch="Fill" />
+
+        <ImageBrush x:Key="Theme1BorderBrush"  AlignmentX="Left" AlignmentY="Top" ImageSource="ms-appx:///Assets/Panel1LargeTheme1.png" Stretch="Fill" />
+
+        <ImageBrush x:Key="Theme1BlackBoard"  AlignmentX="Left" AlignmentY="Top" ImageSource="ms-appx:///Assets/Panel1LargeTheme1.png"
+                    Stretch="Fill" />
+
+        <SolidColorBrush x:Key="ListViewItemSelectedBackgroundThemeBrush" Color="Transparent"></SolidColorBrush>
+
+        <SolidColorBrush x:Key="ListViewItemSelectedPointerOverBackgroundThemeBrush" Color="#4DFFFFFF"/>
+
+        <SolidColorBrush x:Key="ListViewItemSelectedPointerOverBorderThemeBrush" Color="Transparent"/>
+
+        <SolidColorBrush x:Key="ListViewItemFocusBorderThemeBrush" Color="Red"/>
+
+        <Style x:Key="ListViewGridStyle" TargetType="ListViewItem">
+            <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
+            <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="TabNavigation" Value="Local"/>
+            <Setter Property="IsHoldingEnabled" Value="True"/>
+            <Setter Property="Margin" Value="0,0,18,2"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListViewItem">
+                        <ListViewItemPresenter 
+                    CheckHintBrush="{ThemeResource ListViewItemCheckHintThemeBrush}" 
+                    CheckBrush="{ThemeResource ListViewItemCheckThemeBrush}" 
+                    ContentMargin="4" 
+                    ContentTransitions="{TemplateBinding ContentTransitions}" 
+                    CheckSelectingBrush="{ThemeResource ListViewItemCheckSelectingThemeBrush}" 
+                    DragForeground="{ThemeResource ListViewItemDragForegroundThemeBrush}" 
+                    DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}" 
+                    DragBackground="{ThemeResource ListViewItemDragBackgroundThemeBrush}" 
+                    DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}" 
+                    FocusBorderBrush="{ThemeResource ListViewItemFocusBorderThemeBrush}" 
+                    PointerOverBackgroundMargin="1" 
+                    PlaceholderBackground="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}" 
+                    PointerOverBackground="{ThemeResource ListViewItemPointerOverBackgroundThemeBrush}" 
+                    ReorderHintOffset="{ThemeResource ListViewItemReorderHintThemeOffset}" 
+                    SelectedPointerOverBorderBrush="{ThemeResource ListViewItemSelectedPointerOverBorderThemeBrush}" 
+                    SelectionCheckMarkVisualEnabled="False" 
+                    SelectedForeground="{ThemeResource ListViewItemSelectedForegroundThemeBrush}" 
+                    SelectedPointerOverBackground="{ThemeResource ListViewItemSelectedPointerOverBackgroundThemeBrush}" 
+                    SelectedBorderThickness="{ThemeResource ListViewItemCompactSelectedBorderThemeThickness}" 
+                    SelectedBackground="SteelBlue" 
+              />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="GridViewGridStyle" TargetType="GridViewItem">
+            <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
+            <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="TabNavigation" Value="Local"/>
+            <Setter Property="IsHoldingEnabled" Value="True"/>
+            <Setter Property="Margin" Value="0,0,2,2"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="GridViewItem">
+                        <GridViewItemPresenter CheckHintBrush="{ThemeResource ListViewItemCheckHintThemeBrush}" 
+                                               CheckBrush="{ThemeResource ListViewItemCheckThemeBrush}"
+                                               ContentMargin="4"
+                                               ContentTransitions="{TemplateBinding ContentTransitions}"
+                                               CheckSelectingBrush="{ThemeResource ListViewItemCheckSelectingThemeBrush}" 
+                                               DragForeground="{ThemeResource ListViewItemDragForegroundThemeBrush}" 
+                                               DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}" 
+                                               DragBackground="{ThemeResource ListViewItemDragBackgroundThemeBrush}" 
+                                               DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}" 
+                                               FocusBorderBrush="{ThemeResource ListViewItemFocusBorderThemeBrush}"
+                                               PlaceholderBackground="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}" 
+                                               PointerOverBackground="{ThemeResource ListViewItemPointerOverBackgroundThemeBrush}" 
+                                               ReorderHintOffset="{ThemeResource ListViewItemReorderHintThemeOffset}"
+                                               SelectedPointerOverBorderBrush="{ThemeResource ListViewItemSelectedPointerOverBorderThemeBrush}" 
+                                               SelectionCheckMarkVisualEnabled="False" 
+                                               SelectedForeground="Olive" 
+                                               SelectedPointerOverBackground="{ThemeResource ListViewItemSelectedPointerOverBackgroundThemeBrush}"
+                                               SelectedBorderThickness="{ThemeResource GridViewItemCompactSelectedBorderThemeThickness}"
+                                               SelectedBackground="{ThemeResource ListViewItemSelectedBackgroundThemeBrush}"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="GridHeader" TargetType="grid:GridHeaderCellControl" >
+            <Setter Property="BorderThickness" Value="1"></Setter>
+            <Setter Property="BorderBrush" Value="White"></Setter>
+            <Setter Property="Background" Value="Olive"></Setter>
+            <Setter Property="Foreground" Value="white"></Setter>
+            <Setter Property="FontFamily" Value="Comic Sans MS"></Setter>
+            <Setter Property="FontSize" Value="{Binding HeaderFontSize}"></Setter>
+            <Setter Property="FontStyle" Value="Normal"></Setter>
+            <Setter Property="FontWeight" Value="Bold"></Setter>
+        </Style>
+
+        <Style TargetType="grid:GridCell" x:Key="CellStyle">
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+
+        <Style x:Key="AltRowStyle" TargetType="grid:VirtualizingCellsControl">
+            <Setter Property="Background" Value = "NavajoWhite" />
+            <Setter Property="Foreground" Value = "Black" />
+        </Style>
+
+
+        <Style x:Key="GridDetail" TargetType="grid:VirtualizingCellsControl" >
+            <Setter Property="BorderThickness" Value="0"></Setter>
+            <Setter Property="BorderBrush" Value="Transparent"></Setter>
+            <Setter Property="Foreground" Value="white"></Setter>
+            <Setter Property="FontFamily" Value="Comic Sans MS"></Setter>
+            <Setter Property="FontSize" Value="{Binding NickNameFontSize}"></Setter>
+            <Setter Property="FontStyle" Value="Normal"></Setter>
+            <Setter Property="FontWeight" Value="Normal"></Setter>
+            <Setter Property="Margin" Value="0"></Setter>
+        </Style>
+
+    </Application.Resources>
+</Application>

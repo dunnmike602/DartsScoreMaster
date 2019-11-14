@@ -1,0 +1,112 @@
+﻿<controls:BindablePage x:Name="HubPageRoot"
+    x:Class="DartsScoreMaster.Views.Hub"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:controls="using:DartsScoreMaster.Controls"  mc:Ignorable="d" >
+
+    <interactivity:Interaction.Behaviors>
+        <controls:SizeChangeBehavior />
+    </interactivity:Interaction.Behaviors>
+
+    <Grid Background="Black" Margin="0 0 0 0">
+        <controls:NoScreen x:Name="NotFullScreen"/>
+        <Grid Grid.Row="0" x:Name="FullScreen" Margin="10 0 0 0" >
+            <Grid.ChildrenTransitions>
+                <TransitionCollection>
+                    <EntranceThemeTransition/>
+                </TransitionCollection>
+            </Grid.ChildrenTransitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="4*"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <StackPanel Visibility="{Binding ErrorsDetected, Converter={StaticResource VisibilityConverter}}" Margin="50" Orientation="Horizontal" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Left">
+                <TextBlock  Margin="0 0 20 0" FontSize="{Binding WarningFontSize}" FontStyle="Normal" FontFamily="Comic Sans MS" 
+                                IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Center">
+                        Score Master has recorded errors, please see the Settings Charm for Details.
+                </TextBlock>
+            </StackPanel>
+            <Hub  HorizontalAlignment="Stretch" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+                <Hub.Header>
+                    <!-- Back button and page title -->
+                    <Grid Margin="0 0 0 50">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="SCORE MASTER" FontStyle="Normal" FontFamily="Comic Sans MS"   HorizontalAlignment="Left"
+                        IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Top"/>
+                    </Grid>
+                </Hub.Header>
+
+                <HubSection>
+                    <HubSection.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Foreground="White" Text="THE SCORE MASTER" FontSize="{Binding HubTextFontSize}" FontStyle="Normal" FontFamily="Comic Sans MS" 
+                             
+                                   IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Top"/>
+                        </DataTemplate>
+                    </HubSection.HeaderTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="0.8*" />
+                            </Grid.RowDefinitions>
+                            <Button Background="Transparent" RequestedTheme="Dark" Command="{Binding NavigateToScorer}"  BorderBrush="White" BorderThickness="1">
+                                <Image  Source="ms-appx:///Assets/dartsintro.png"></Image>
+                            </Button>
+                        </Grid>
+                    </DataTemplate>
+                </HubSection>
+                <HubSection>
+                    <HubSection.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Foreground="White" x:Name="Statistics" Text="PLAYERS &amp; STATISTICS" FontSize="{Binding HubTextFontSize}" FontStyle="Normal" FontFamily="Comic Sans MS" 
+                        IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Top"/>
+                        </DataTemplate>
+                    </HubSection.HeaderTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="0.8*" />
+                            </Grid.RowDefinitions>
+                            <Button Background="Transparent" RequestedTheme="Dark" Command="{Binding NavigateToPlayers}"  BorderBrush="White" BorderThickness="1">
+                                <Image Source="ms-appx:///Assets/screen2.png"></Image>
+                            </Button>
+                        </Grid>
+                    </DataTemplate>
+                </HubSection>
+                <HubSection>
+                    <HubSection.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Foreground="White"  Text="HELP" FontSize="{Binding HubTextFontSize}" FontStyle="Normal" FontFamily="Comic Sans MS" 
+                        IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Top"/>
+                        </DataTemplate>
+                    </HubSection.HeaderTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="0.8*" />
+                            </Grid.RowDefinitions>
+                            <Button Background="Transparent" RequestedTheme="Dark" Command="{Binding NavigateToHelp}" BorderBrush="White" BorderThickness="1">
+                                <Image Source="ms-appx:///Assets/HELP.png"></Image>
+                            </Button>
+                        </Grid>
+                    </DataTemplate>
+                </HubSection>
+            </Hub>
+        </Grid>
+
+
+
+    </Grid>
+</controls:BindablePage>

@@ -1,0 +1,197 @@
+﻿<controls1:BindablePage
+    x:Class="DartsScoreMaster.Views.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:views="using:DartsScoreMaster.Views" x:Name="MainPageRoot"
+    xmlns:controls="using:WinRTXamlToolkit.Controls"
+    xmlns:controls1="using:DartsScoreMaster.Controls"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity" NavigationCacheMode="Enabled" 
+    mc:Ignorable="d" DataContext="{Binding Source={StaticResource Locator}, Path=MainPageViewModel}">
+    <interactivity:Interaction.Behaviors>
+        <controls1:SizeChangeBehavior />
+    </interactivity:Interaction.Behaviors>
+    <Grid>
+        <controls1:NoScreen x:Name="NotFullScreen"/>
+        <Grid x:Name="FullScreen" >
+            <Grid.Background>
+                <ImageBrush  ImageSource="ms-appx:///Assets/bricks.png" Stretch="UniformToFill" />
+            </Grid.Background>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="{Binding TopRowHeight}"></RowDefinition>
+                <RowDefinition Height="8*"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <!-- TOP DISPLAY LINE -->
+            <Grid Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Margin="0" Background="Transparent">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1.2*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <!-- Top Line Centre - Checkout card -->
+                <Border Grid.Column="2" Grid.Row="0" Background="Black" BorderThickness="2" BorderBrush="White"   Margin="0 20 20 0"  HorizontalAlignment="Stretch"  VerticalAlignment="Stretch">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <ItemsControl ItemsSource="{Binding HintList}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  Visibility="{Binding IsGameRunning,Converter={StaticResource VisibilityConverter}}" >
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <ItemsControl ItemsSource="{Binding HintDarts}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  Visibility="{Binding IsGameRunning,Converter={StaticResource VisibilityConverter}}" >
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <ItemsStackPanel Orientation="Horizontal" Margin="15 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Orientation="Horizontal" Margin="0 0 3 0">
+                                                    <Image Margin="3 0 3 0" Width="20" Height="20" Source="{Binding HintImage}" Visibility="{Binding HintImage, Converter={StaticResource VisibilityWhenNullConverter}}" Stretch="Fill" ></Image>
+                                                    <TextBlock   HorizontalAlignment="Center" TextAlignment="Left" Foreground="White"
+                                                 Text="{Binding HintText}" FontSize="{Binding ElementName=MainPageRoot,Path= DataContext.CheckoutHintsFontSize}" FontStyle="Normal" FontWeight="Bold" FontFamily="Comic Sans MS"
+                                                 IsHitTestVisible="false" />
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </DataTemplate>
+
+                            </ItemsControl.ItemTemplate>
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <ItemsStackPanel Orientation="Horizontal" Margin="15 0 0 0" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
+
+                    </Grid>
+                </Border>
+
+                <!-- Top Line Centre - Game selected -->
+                <Border Grid.Column="1" Grid.Row="0"  Margin="30 20 30 0"  HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Background="Black" BorderThickness="2" BorderBrush="White">
+                    <Grid >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                            <ColumnDefinition Width="2*"></ColumnDefinition>
+                            <ColumnDefinition Width="2*"></ColumnDefinition>
+                            <ColumnDefinition Width="2*"></ColumnDefinition>
+                            <ColumnDefinition Width="20"></ColumnDefinition>
+                            <ColumnDefinition Width="2*"></ColumnDefinition>
+                            <ColumnDefinition Width="3*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid  Grid.Column="1" Visibility="{Binding IsGameRunning,Converter={StaticResource VisibilityConverter}}" Margin="0 0 0 0" >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="2*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Image  Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center"  Source="{Binding InPlayPlayer.DartImage}" />
+                            <TextBlock Grid.Column="1"  Text="{Binding Throw1}" Width="{Binding ScoreIndWidth}" FontSize="{Binding ThrowFontSize}" TextAlignment="Left" 
+                                FontStyle="Normal" FontWeight="Bold" FontFamily="Comic Sans MS"  Margin="0" Padding="4 0 0 0"
+                                   IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Center" />
+                        </Grid>
+
+                        <Grid  Grid.Column="2" Visibility="{Binding IsGameRunning,Converter={StaticResource VisibilityConverter}}" Margin="0" >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="2*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Image Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center"  Source="{Binding InPlayPlayer.DartImage}" />
+                            <TextBlock  Grid.Column="1"  Text="{Binding Throw2}" Padding="4 0 0 0"
+                                   Width="{Binding ScoreIndWidth}" FontSize="{Binding ThrowFontSize}" FontStyle="Normal" FontWeight="Bold" FontFamily="Comic Sans MS"  Margin="0"
+                               IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Center"  TextAlignment="Left"/>
+                        </Grid>
+                        <Grid  Grid.Column="3" Visibility="{Binding IsGameRunning,Converter={StaticResource VisibilityConverter}}" Margin="0" >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="2*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Image  Grid.Column="0"  HorizontalAlignment="Left" VerticalAlignment="Center" Source="{Binding InPlayPlayer.DartImage}" />
+                            <TextBlock Grid.Column="1" Text="{Binding Throw3}" Width="{Binding ScoreIndWidth}"  FontSize="{Binding ThrowFontSize}" FontStyle="Normal" FontWeight="Bold" 
+                                   FontFamily="Comic Sans MS"  Margin="0" Padding="4 0 0 0"
+                               IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Center" TextAlignment="Left" />
+                        </Grid>
+                        <TextBlock Grid.Column="4"  Visibility="{Binding IsGameRunning,Converter={StaticResource VisibilityConverter}}" FontSize="{Binding SmallButtonFontSize}" HorizontalAlignment="Center" 
+                               VerticalAlignment="Center" Foreground="White">=</TextBlock>
+                        <TextBlock Visibility="{Binding IsGameRunning,Converter={StaticResource VisibilityConverter}}" Grid.Column="5" Text="{Binding TotalThrow}" Width="{Binding TotalScoreIndWidth}"  FontSize="{Binding ThrowFontSize}" FontStyle="Normal" FontWeight="Bold" FontFamily="Comic Sans MS"  Margin="4 4 4 4"
+                                   IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Center" TextAlignment="Center" />
+
+                        <Button Grid.Column="6"  Background="Black" BorderBrush="White" BorderThickness="1" Width="{Binding UndoButtonWidth}" Height="{Binding UndoButtonHeight}"   Margin="0"  Padding="4 4 8 4"
+                                           Command="{Binding UndoCommand}"
+                                           FontSize="{Binding SmallButtonFontSize}" VerticalAlignment="Center" 
+                                           Visibility="{Binding IsUndoEnabled,Converter={StaticResource VisibilityConverter}}" Foreground="White"   HorizontalAlignment="Center" FontFamily="Comic Sans MS" 
+                                           Content="Undo"></Button>
+                    </Grid>
+
+                </Border>
+
+
+                <!-- Top Line Left - Back Button -->
+                <Border  Grid.Column="0" Grid.Row="0"  Margin="30 20 30 0" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch"  Background="Black" BorderThickness="2" BorderBrush="White">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Button  Grid.Column="0"  Margin="15 0 0 0" Command="{Binding BackCommand}"  
+                        Style="{StaticResource NavigationBackButtonNormalStyle}" Foreground="White"
+                        VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                        AutomationProperties.Name="Back"
+                        AutomationProperties.AutomationId="BackButton"
+                        AutomationProperties.ItemType="Navigation Button"/>
+                    <Button Background="Transparent" BorderThickness="0" Grid.Column="1" Margin="8" Command="{Binding NavigateToPlayers}">
+                        <Image Source="ms-appx:///Assets/screen2.png"></Image>
+                    </Button>
+                    <Button Background="Transparent"  Grid.Column="2" BorderThickness="0"  Margin="8" Command="{Binding FlipCommand}" Padding="0"
+                            FontSize="{Binding SmallButtonFontSize}" VerticalAlignment="Bottom"  HorizontalAlignment="Right" FontFamily="Comic Sans MS">
+                        <Image  Source="{Binding FlipImageSource}"></Image>
+                    </Button>
+
+
+                    <TextBlock Grid.Column="3" HorizontalAlignment="Left"  
+                               TextAlignment="Center"  Margin="20 20 10 20" Text="{Binding MatchDetails}" FontSize="{Binding TitleFontSize}"
+                               FontStyle="Normal" FontWeight="Bold" FontFamily="Comic Sans MS" IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Center"/>
+                    <controls1:StartGameButton Grid.Column="4"  HorizontalAlignment="Right" VerticalAlignment="Center"   Margin="10 0 15 0"  />
+                </Grid>
+                </Border>
+            </Grid>
+
+            <Viewbox Grid.Row="1" Grid.Column="0" Margin="10" Stretch="Uniform">
+                <Grid>
+                    <views:BigBoard DartImageName="{Binding DartImageName}" PlaySound="{Binding PlaySound}" CheckoutHint="{Binding CheckoutHints}" 
+                                    Visibility="{Binding ShowSimpleBoard,Converter={StaticResource VisibilityConverter}}"  DartScore="{Binding DartScore, Mode=TwoWay}"
+                                    Enabled="{Binding IsBoardEnabled}"/>
+                    <views:Board DartImageName="{Binding DartImageName}" PlaySound="{Binding PlaySound}" CheckoutHint="{Binding CheckoutHints}" 
+                             DartScore="{Binding DartScore, Mode=TwoWay}" Enabled="{Binding IsBoardEnabled}" 
+                                 Visibility="{Binding ShowSimpleBoard,Converter={StaticResource ReverseVisibilityConverter}}"/>
+
+                </Grid>
+            </Viewbox>
+
+
+            <!-- Players -->
+            <Grid Grid.Column="1" Grid.Row="1">
+                <controls1:AcceptRejectBox HorizontalAlignment="Left" VerticalAlignment="Center" DataContext="{Binding Source={StaticResource Locator}, Path=MainPageViewModel}"></controls1:AcceptRejectBox>
+
+                <ItemsControl   ItemsSource="{Binding ParticipatingPlayers}" Margin="0 20 20 20" 
+                           HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemTemplate="{Binding PlayerTemplate}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <controls:UniformGrid Rows="3" Columns="2" >
+                            </controls:UniformGrid>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+            </Grid>
+        </Grid>
+    </Grid>
+</controls1:BindablePage>

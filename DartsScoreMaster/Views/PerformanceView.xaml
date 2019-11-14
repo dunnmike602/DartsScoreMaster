@@ -1,0 +1,74 @@
+﻿<UserControl
+    x:Class="DartsScoreMaster.Views.PerformanceView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:chart="using:Syncfusion.UI.Xaml.Charts"
+    mc:Ignorable="d" x:Name="ControlRoot"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+    <UserControl.Resources>
+        <DataTemplate x:Key="LabelTemplate">
+            <Grid>
+                <TextBlock Padding="3" Text="{Binding  Converter={StaticResource DecimalConverter}}" FontSize="{Binding ElementName=ControlRoot, Path=DataContext.ChartLabelFontSize}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            </Grid>
+        </DataTemplate>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel  Grid.Row="0" Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0 0 0 0">
+            <TextBlock  Text="{Binding ChartTitle}" FontSize="{Binding CaptionFontSize}" DataContext="{Binding Source={StaticResource Locator}, Path=StatisticsViewModel}"
+                       FontStyle="Normal"  FontWeight="Bold" Foreground="White"  FontFamily="Comic Sans MS"  Margin="0" Padding="10"
+                         IsHitTestVisible="false" TextWrapping="NoWrap" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center"/>
+            <ComboBox  Margin="30 0 0 0"  HorizontalAlignment="Left"   Width="Auto"
+                      ItemContainerStyle="{StaticResource GameItemStyle}" Style="{StaticResource GameStyle}" VerticalAlignment="Center"
+                       ItemsSource="{Binding StatisticsList}"  SelectedItem="{Binding SelectedStatistic,Mode=TwoWay}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock FontFamily="Comic Sans MS" Width="Auto"  Text="{Binding Value}" ></TextBlock>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+
+            <RadioButton Margin="30 0 0 0" Foreground="White" VerticalAlignment="Center"  FontSize="{Binding CaptionFontSize}" FontFamily="Comic Sans MS" Content="Month" GroupName="A"
+                         IsChecked="{Binding PeriodValue, Mode=TwoWay, ConverterParameter=0, Converter={StaticResource RadioConverter}}"></RadioButton>
+            <RadioButton Margin="30 0 0 0"  Foreground="White" VerticalAlignment="Center" FontSize="{Binding CaptionFontSize}" FontFamily="Comic Sans MS" Content="Year" GroupName="A"
+                         IsChecked="{Binding PeriodValue, Mode=TwoWay, ConverterParameter=1, Converter={StaticResource RadioConverter}}"></RadioButton>
+            <RadioButton Margin="30 0 0 0" Foreground="White" VerticalAlignment="Center"  FontSize="{Binding CaptionFontSize}" FontFamily="Comic Sans MS" Content="Day" GroupName="A" 
+                         IsChecked="{Binding PeriodValue, Mode=TwoWay, ConverterParameter=2, Converter={StaticResource RadioConverter}}"></RadioButton>
+
+
+        </StackPanel>
+        <Grid  DataContext="{Binding Source={StaticResource Locator}, Path=StatisticsViewModel}" Grid.Column="0" Grid.Row="1"
+               VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0 20 0 0" >
+
+            <chart:SfChart Padding="0" Margin="0">
+                <chart:SfChart.PrimaryAxis>
+                    <chart:CategoryAxis PlotOffset="15"  FontSize="{Binding ElementName=ControlRoot, Path=DataContext.GraphFontSize}" FontFamily="Comic Sans MS" Foreground="White">
+                        <chart:CategoryAxis.Header>
+                            <TextBlock FontSize="{Binding ElementName=ControlRoot, Path=DataContext.CaptionFontSize}" FontFamily="Comic Sans MS" >Date</TextBlock>
+                        </chart:CategoryAxis.Header>
+                    </chart:CategoryAxis>
+                </chart:SfChart.PrimaryAxis>
+
+                <chart:SfChart.SecondaryAxis>
+                    <chart:NumericalAxis  Minimum="{Binding Minimum}" Maximum="{Binding Maximum}" Interval="{Binding Interval}" RangePadding="Round" FontSize="{Binding ElementName=ControlRoot, Path=DataContext.GraphFontSize}" Foreground="White" FontFamily="Comic Sans MS">
+
+                    </chart:NumericalAxis>
+                </chart:SfChart.SecondaryAxis>
+
+                <chart:ColumnSeries EnableAnimation="True" ShowTooltip="True" ShowEmptyPoints="False"  XBindingPath="Name" YBindingPath="Value" ItemsSource="{Binding CurrentChartSeries}">
+                    <chart:ColumnSeries.AdornmentsInfo>
+                        <chart:ChartAdornmentInfo ShowConnectorLine="False" ShowMarker="False" LabelTemplate="{StaticResource  LabelTemplate}"  ShowLabel="True" VerticalAlignment="Center"  FontSize="{Binding ElementName=ControlRoot, Path=DataContext.GraphFontSize}" FontFamily="Comic Sans MS" 
+                                                   Foreground="White" />
+                    </chart:ColumnSeries.AdornmentsInfo>
+                </chart:ColumnSeries>
+            </chart:SfChart>
+        </Grid>
+    </Grid>
+</UserControl>

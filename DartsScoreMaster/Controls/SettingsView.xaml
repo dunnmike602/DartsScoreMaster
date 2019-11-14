@@ -1,0 +1,107 @@
+﻿<UserControl
+    x:Class="DartsScoreMaster.Controls.SettingsView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:input="using:Syncfusion.UI.Xaml.Controls.Input"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+
+    <UserControl.Resources>
+
+        <Storyboard x:Name="Reveal">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" Storyboard.TargetName="ControlRoot">
+                <EasingDoubleKeyFrame KeyTime="0" x:Name="StartValue"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:1" Value="0">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <CubicEase EasingMode="EaseInOut"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Name="Hide">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" Storyboard.TargetName="ControlRoot">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:1"  x:Name="EndValue">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <CubicEase EasingMode="EaseInOut"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+    </UserControl.Resources>
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid  DataContext="{Binding Source={StaticResource Locator}, Path=SettingsViewModel}" x:Name="FullScreen"  Background="White">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0"  Grid.ColumnSpan="2" Margin="5 10 0 0">
+                <CheckBox Foreground="Black"  IsChecked="{Binding ShowCheckoutHints, Mode=TwoWay}" Content="Enable Checkout Hints"></CheckBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="0"  Grid.ColumnSpan="2" Margin="5 10 0 0">
+                <CheckBox Foreground="Black"   IsChecked="{Binding PlaySounds, Mode=TwoWay}"
+                      Content="Enable Sounds and Commentary"></CheckBox>
+            </StackPanel>
+            <TextBlock Foreground="Black" Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="0" Margin="5 10 0 0"  FontSize="18" FontWeight="Bold">Commentary</TextBlock>
+            <TextBlock Foreground="Black" Grid.Row="3" Grid.ColumnSpan="2" Grid.Column="0" Margin="5 10 0 0" FontSize="18" TextWrapping="Wrap">Use LOAD to select a directory to load your own Commentary files. Use RESET to clear files and use default voice.</TextBlock>
+
+            <Button Foreground="Black" Margin="5 10 0 0" Grid.Column="0" Grid.Row="4" Content="LOAD" Command="{Binding LoadSoundsCommand}" 
+               IsEnabled="{Binding IsBusy, Converter={StaticResource ReverseBoolConverter}}"></Button>
+
+            <Button Foreground="Black" Margin="5 10 0 0" Grid.Column="1" Grid.Row="4" Content="RESET" Command="{Binding ResetSoundsCommand}" 
+                    IsEnabled="{Binding IsBusy, Converter={StaticResource ReverseBoolConverter}}"></Button>
+
+            <ProgressBar Foreground="Black" Visibility="{Binding IsBusy, Converter={StaticResource VisibilityConverter}}"  Margin="5 10 0 0" Height="15" 
+                         Grid.Column="0" Grid.Row="5"  IsIndeterminate="{Binding IsBusy}" />
+
+            <TextBlock Foreground="Black" Grid.Row="6" Grid.ColumnSpan="2" Grid.Column="0" Margin="5 10 0 0"  FontSize="18" FontWeight="Bold">Data Management</TextBlock>
+            <TextBlock Foreground="Black" Grid.Row="7" Grid.ColumnSpan="2" Grid.Column="0" Margin="5 10 0 0" FontSize="18" 
+                       TextWrapping="Wrap">You can Restore all your player information and statistics from up to 5 days ago.</TextBlock>
+
+            <StackPanel Margin="5 10 0 0" Orientation="Horizontal" Grid.Column="0" Grid.Row="8" Grid.ColumnSpan="2">
+                <Button Foreground="Black" Content="RESTORE" IsEnabled="{Binding IsRestoreAvailable}" 
+                    Command="{Binding RestoreCommand}"></Button>
+                <ComboBox  Margin="5 0 0 0"  FontSize="{Binding SettingComboFontSize}" Style="{StaticResource GameStyle}" SelectedItem="{Binding SelectedBackup, Mode=TwoWay}"  ItemsSource="{Binding Backups}"/>
+            </StackPanel>
+            <TextBlock Foreground="Black" Grid.Row="9" Grid.ColumnSpan="2" Grid.Column="0" Margin="5 10 0 0"  FontSize="18" FontWeight="Bold">Data Export</TextBlock>
+            <TextBlock Foreground="Black"  Grid.Row="10" Grid.ColumnSpan="2" Grid.Column="0" Margin="5 10 0 0" FontSize="18" TextWrapping="Wrap">Export all player data to a file on your local machine. This file
+        can be loaded into Excel so you can run your own analysis. The CLEAR button removes all existing data so you can start collecting from scratch.</TextBlock>
+
+
+            <Button Foreground="Black" Margin="5 10 0 0" Grid.Column="0" Grid.Row="11" Content="EXPORT" Command="{Binding ExportCommand}"></Button>
+
+            <Button Foreground="Black" Margin="5 10 0 0" Grid.Column="1" Grid.Row="11" Content="CLEAR" IsEnabled="{Binding IsBusy, Converter={StaticResource ReverseBoolConverter}}" 
+                    Command="{Binding ClearPlayersCommand}"></Button>
+
+
+            <TextBlock Visibility="{Binding ErrorsDetected, Converter={StaticResource VisibilityConverter}}" Foreground="Black" Grid.Row="12" Grid.ColumnSpan="2" Grid.Column="0" Margin="5 10 0 0"  FontSize="18" FontWeight="Bold">Errors</TextBlock>
+            <TextBlock Visibility="{Binding ErrorsDetected, Converter={StaticResource VisibilityConverter}}" Foreground="Black"  Grid.Row="13" Grid.ColumnSpan="2" Grid.Column="0" Margin="5 10 0 0" FontSize="18" TextWrapping="Wrap">Errors have been logged from previous crashes if
+                you wish you can email them to support by clicking the button below. This also copies the error details into the Windows clipboard so you can save them yourself.</TextBlock>
+
+
+            <Button Visibility="{Binding ErrorsDetected, Converter={StaticResource VisibilityConverter}}" Grid.ColumnSpan="2" Foreground="Black" Margin="5 10 0 0" Grid.Column="0" 
+                    Grid.Row="14" Content="EMAIL SUPPORT" Command="{Binding EmailCommand}"></Button>
+
+        </Grid>
+    </ScrollViewer>
+</UserControl>
